@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include "Noreplay.h"
 #include <stack>
 #include <cassert>
 
@@ -29,7 +28,7 @@ private:
 
     int (*_map)[Wight];
     Node start{1, 1}, end{8, 8};
-    std::stack<Node> _paths;
+    std::stack <Node> _paths;
 public:
 public:
     MapPath() {
@@ -60,24 +59,52 @@ public:
 
     bool findpath() {
 //        assert(_paths.top() != start);
-        int figer = 4;
+        Node node;
+        int figer = 4,find;
         while (not this->_paths.empty()) {
             Node cur = this->_paths.top();
+            node = cur;
             if (this->_paths.top() == this->end) {
                 std::cout << "Success." << std::endl;
-                return 1;
+                return true;
             }
-            while (figer >= 0) {
+            find=0;
+            while (figer >= 0 && find==0) {
                 figer -= 1;
                 switch (figer) {
-
+                    case 0:
+                        node.y -= 1;
+                        break;
+                    case 1:
+                        node.x += 1;
+                        break;
+                    case 2:
+                        node.y += 1;
+                        break;
+                    case 3:
+                        node.x -= 1;
+                        break;
                 }
+                if (getNode(node)==0)
+                    find=1;
+            }
+            if (find==1){
+                this->_paths.push(node);
+                this->set_invalid(node);
+            } else{
+                this->set_valid(cur);
+                _paths.pop();
             }
         }
+        return false;
     }
 
     int getPoint(int x, int y) {
         return this->_map[x][y];
+    }
+
+    int getNode(const Node &node) {
+        return getPoint(node.x, node.y);
     }
 
     virtual ~MapPath() {
@@ -87,9 +114,14 @@ public:
 
 int main() {
     MapPath mapPath;
-    mapPath.findpath();
+    if (mapPath.findpath()){
+        std::cout<<"ok"<<std::endl;
+    } else{
+        std::cout<<"bad"<<std::endl;
+    }
 //    Noreplay noreplay("1223345");
 //    std::cout << noreplay << std::endl;
 //    std::cout << noreplay.norep().get();
+
     return 0;
 }
