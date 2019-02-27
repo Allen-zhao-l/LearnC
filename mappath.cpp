@@ -22,6 +22,11 @@ class MapPath {
         bool operator!=(const Node &rhs) const {
             return !(rhs == *this);
         }
+
+        friend std::ostream &operator<<(std::ostream &os, const Node &node) {
+            os << "(" << node.x<<"," << node.y<<')';
+            return os;
+        }
     };
 
 private:
@@ -60,17 +65,21 @@ public:
     bool findpath() {
 //        assert(_paths.top() != start);
         Node node;
-        int figer = 4,find;
+        int figer, find;
         while (not this->_paths.empty()) {
             Node cur = this->_paths.top();
             node = cur;
             if (this->_paths.top() == this->end) {
                 std::cout << "Success." << std::endl;
+                for (int x = 0; x < _paths.size(); x++, _paths.pop())
+                    std::cout << _paths.top() << "|";
                 return true;
             }
-            find=0;
-            while (figer >= 0 && find==0) {
+            find = 0;
+            figer=4;
+            while (figer >= 0 && find == 0) {
                 figer -= 1;
+                node=cur;
                 switch (figer) {
                     case 0:
                         node.y -= 1;
@@ -85,14 +94,14 @@ public:
                         node.x -= 1;
                         break;
                 }
-                if (getNode(node)==0)
-                    find=1;
+                if (getNode(node) == 0)
+                    find = 1;
             }
-            if (find==1){
+            if (find == 1) {
                 this->_paths.push(node);
                 this->set_invalid(node);
-            } else{
-                this->set_valid(cur);
+            } else {
+//                this->set_valid(cur);
                 _paths.pop();
             }
         }
@@ -114,10 +123,10 @@ public:
 
 int main() {
     MapPath mapPath;
-    if (mapPath.findpath()){
-        std::cout<<"ok"<<std::endl;
-    } else{
-        std::cout<<"bad"<<std::endl;
+    if (mapPath.findpath()) {
+        std::cout << "ok" << std::endl;
+    } else {
+        std::cout << "bad" << std::endl;
     }
 //    Noreplay noreplay("1223345");
 //    std::cout << noreplay << std::endl;
