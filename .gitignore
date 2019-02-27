@@ -1,7 +1,9 @@
 # Prerequisites
 *.d
-./cmake-build-debug/
-./.idea/
+cmake-build-debug/
+.idea/
+.ycm_extra_conf.py
+build/
 # Compiled Object files
 *.slo
 *.lo

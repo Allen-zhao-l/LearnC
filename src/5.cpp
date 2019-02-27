@@ -16,8 +16,6 @@ char *i_strcpy(char *, const char *);
 void out(int *, int, char base = '\n');
 int * even_odd(int *, int);
 
-int main() {
-	using namespace std;
 	//int x;
 	//cout<<"the express x=100 has the value";
 	//cout<<(x=100)<<endl;
@@ -137,13 +135,7 @@ int main() {
 //    cout<<p1[1].x<<endl;
 //    cout<<p1->x<<endl;
 
-	int *array = new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-	even_odd(array, 10);
-	cout << "find sec max number: " << find_sec_max(array, 10) << endl;
-	out(array, 10, ',');
-	delete[] array;
-	return 0;
-}
+
 int func(int x) {
 	using namespace std;
 	int countx = 0;
